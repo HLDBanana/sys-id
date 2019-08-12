@@ -1,0 +1,26 @@
+#指定注册中心地址
+eureka:
+  instance:
+    # 配置注册中心Status显示，否则会出现读取了docker配置中心id，无法读取到配置中心配置10.4.237.123:8791
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    # 打开注册中心Status显示修改
+    prefer-ip-address: true
+    hostname: ${spring.cloud.client.ip-address}
+  hystrix:
+    enabled: true
+  client:
+    serviceUrl:
+      defaultZone: http://10.4.237.123:8761/eureka/
+spring:
+  application:
+    name: uniqueId
+  # 配置中心
+  cloud:
+    config:
+      discovery:
+        service-id: SPRINGCLOUD-CONFIG    # 配置中心注册名称 默认去{label}节点读取order-{profile}.yml文件
+        enabled: true
+      # 后缀 dev|prod
+      profile: dev
+      # dev|master分支，建议使用它区分生产、测试环境
+      label: dev
